@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Bootstrapの基本テンプレート</title>
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+    <div class="container">
+  		<h1>sample</h1>
+
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped" role="progressbar" id="total_progress">
+          0%
+        </div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped" role="progressbar" id="script_progress">
+          0%
+        </div>
+      </div>
+      <div id="preview">
+
+      </div>
+      <div id="code">
+
+      </div>
+    </div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="src/jquery-3.2.1.min.js"></script>
+    <script src="src/scratchblocks.min.js"></script>
+    <script src="src/translations-all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="src/ProjectJsonSB.js"></script>
+    <script type="text/javascript">
+      ProjectJsonSB.onprogress = function(e){
+        $('#total_progress').css('width',e.parcent.total + '%').text('total loaded ' + e.parcent.total + '%');
+        $('#script_progress').css('width',e.parcent.script + '%').text('script loaded ' + e.parcent.script + '%');
+      }
+      ProjectJsonSB.onload = function(e){
+        document.getElementById('code').innerHTML = e.result;;
+      }
+      $.get('https://projects.scratch.mit.edu/internalapi/project/181308581/get/',function(res){
+        var json = JSON.parse(res).children[0].scripts;
+        gjson = json;
+        console.log(json);
+        ProjectJsonSB.getAll(json,'#preview');
+      });
+    </script>
+	</body>
+</html>
